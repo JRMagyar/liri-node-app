@@ -8,7 +8,7 @@ NOTE: This application requires a .env file with user's spotify api keys.
 **concert-this** *band name*
  Lists concert locations and dates for band
  
- **spotify-this-song** "track title*
+ **spotify-this-song** *track title*
  Pulls up song title, artist, and album as well as a spotify preview link for the song.
  
  **movie-this** *movie title*
