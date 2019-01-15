@@ -22,8 +22,16 @@ for(i=3; i < process.argv.length; i++){
     }
     
 }
+
+
 //function containing app logic used because requires recursion for do-what-it-says command
 function runApp(){
+    fs.appendFile("log.txt", command + "| ", function(err){
+        if(err){
+            return console.log(err)
+        }
+    })
+    
     //for command do-what-it-says
     if(command === "do-what-it-says"){
         fs.readFile("random.txt", "utf8", function(error, data) {
@@ -43,7 +51,19 @@ function runApp(){
             
                 for(i=0; i < response.data.length; i++){
                     date = moment(response.data[i].datetime).format("L")
-                    console.log("\nVenue: " + response.data[i].venue.name + "\nLocation: " + response.data[i].venue.city + ", " + response.data[i].venue.region + " " + response.data[i].venue.country + "\nDate: " + date)
+                    var concertData = "\nVenue: " + response.data[i].venue.name + " \nLocation: " + response.data[i].venue.city + ", " + response.data[i].venue.region + " " + response.data[i].venue.country + " \nDate: " + date;
+                    console.log(concertData)
+                    fs.appendFile("log.txt", userQuery +"| ", function(err){
+                        if(err){
+                            return console.log(err)
+                        }
+                        fs.appendFile("log.txt", concertData +"| ", function(err){
+                            if(err){
+                                return console.log(err)
+                            }
+                        })
+                    })
+                    
                 }
             }
         )
@@ -55,7 +75,19 @@ function runApp(){
         }
         spotify.search({ type: 'track', query: userQuery }).then(
             function(response){
-                console.log("\nArtist: " + response.tracks.items[0].artists[0].name + "\nSong: " + response.tracks.items[0].name + "\nPreview Link: " + response.tracks.items[0].preview_url + "\nAlbum name: " + response.tracks.items[0].album.name)
+                var songData = "\nArtist: " + response.tracks.items[0].artists[0].name + " \nSong: " + response.tracks.items[0].name + " \nPreview Link: " + response.tracks.items[0].preview_url + " \nAlbum name: " + response.tracks.items[0].album.name;
+                console.log(songData);
+                fs.appendFile("log.txt", userQuery + "| ", function(err){
+                    if(err){
+                        return console.log(err)
+                    }
+                    fs.appendFile("log.txt", songData +"| ", function(err){
+                        if(err){
+                            return console.log(err)
+                        }
+                    })
+                })
+                
             }
         )
     }
@@ -64,7 +96,19 @@ function runApp(){
         axios.get("http://www.omdbapi.com/?t=" + userQuery + "&y=&plot=short&apikey=trilogy").then(
             function(response) {
                 var path = response.data
-                console.log("\nTitle: " + path.Title + "\nRelease Year: " + path.Year + "\nIMDB rating: " + path.imdbRating + "\nRotten Tomatoes Rating: " + path.Ratings[1].Value + "\nCountry: " + path.Country + "\nLanguage: " + path.Language + "\nPlot: " + path.Plot + "\nActors: " + path.Actors)
+                var movieData = "\nTitle: " + path.Title + " \nRelease Year: " + path.Year + " \nIMDB rating: " + path.imdbRating + " \nRotten Tomatoes Rating: " + path.Ratings[1].Value + " \nCountry: " + path.Country + " \nLanguage: " + path.Language + " \nPlot: " + path.Plot + " \nActors: " + path.Actors
+                console.log(movieData);
+                fs.appendFile("log.txt", userQuery + "| ", function(err){
+                    if(err){
+                        return console.log(err)
+                    }
+                    fs.appendFile("log.txt", movieData + "| ", function(err){
+                        if(err){
+                            return console.log(err)
+                        }
+                    })
+                })
+                
             }     
         );
     }
