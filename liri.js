@@ -93,6 +93,9 @@ function runApp(){
     }
     //for command movie this
     if(command === "movie-this"){
+        if(userQuery == ""){
+            userQuery = "Mr Nobody"
+        }
         axios.get("http://www.omdbapi.com/?t=" + userQuery + "&y=&plot=short&apikey=trilogy").then(
             function(response) {
                 var path = response.data
