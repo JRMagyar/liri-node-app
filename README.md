@@ -11,5 +11,5 @@ NOTE: This application requires a .env file with user's spotify api keys.
  **spotify-this-song** "track title*
  Pulls up song title, artist, and album as well as a spotify preview link for the song.
  
- **movie-this** "movie title"
+ **movie-this** *movie title*
  Lists movies title, release year, actors, plot summary, imdb score, and rotten tomatoes ratings.
